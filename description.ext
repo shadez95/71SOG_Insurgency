@@ -1,0 +1,138 @@
+
+class header {
+	gametype = COOP;
+	minplayers = 1;
+	maxplayers = 34;
+	playerCountMultipleOf = 1;  //Coop type missions use 1, Team type missions use 2
+};
+
+class Params {
+
+	class EmtpyLine1 {
+	//paramsArray[0]
+		title = ":: Mission Settings";
+		values[]={0,0};
+		texts[]={ "",""};
+		default = 0;
+	};
+
+    class cachesLimit {
+	//paramsArray[1]
+		title = "Number of caches to hunt";
+		values[] = {2,3,4,6,8,10,12,14,16};
+		texts[] = {"Two","Three","Four","Six","Eight","Ten","Twelve","Fourteen","Sixteen"};
+		default = 3;
+	};
+	class BluforTickets {
+	//paramsArray[2]
+		title = "Number of tickets Blufor starts with";
+		values[] = {10,20,30,40,50,60,70,80,90};
+		texts[] = {"10","20","30","40","50","60","70","80","90"};
+		default = 80;
+	};
+	class BluforCacheTickets {
+	//paramsArray[3]
+		title = "Number of tickets Blufor gains by cache destroyed";
+		values[] = {10,20,30,40,50,60,70,80,90};
+		texts[] = {"10","20","30","40","50","60","70","80","90"};
+		default =20;
+	};
+};
+
+
+
+author = "dixon13 aka D.Begay 71stSOG|Nighteyes";
+onLoadMission = "An organized insurgence has risen in Stratis overthrowing the official government. Collect intel from enemy combatants and eliminate weapon caches.";
+onLoadIntroTime = true;
+onLoadMissionTime = true;
+onLoadName = INSURGENCY | Stratis;
+loadScreen = "core\Images\71STOGLOADING2.jpg";
+overviewTextLocked = "An organized insurgence has risen in Stratis overthrowing the official government. Collect intel from enemy combatants and eliminate weapon caches.";
+overviewPicture = "core\Images\71STOGLOADING2.jpg";
+
+briefing = 1;
+debriefing = 1;
+respawn = 3;
+respawnDelay = 50;
+RespawnDialog = 1;
+disabledAI = 1;
+enableDebugConsole = 1;
+allowFunctionsRecompile = 1;
+disableChannels[] = {0,1,2,6};   //Disables channels: 0 Global, 1 Side, 2 Command and 6 System Chat
+enableItemsDropping = 0;         //Disable dropping items while swimming
+respawnTemplatesEast[] = {"BASE","Counter"};
+respawnTemplatesWest[] = {"BASE","Counter"};
+
+//Adding sound for AAN news
+class CfgSounds {
+	class news {
+		name="news";
+		sound[] = {"core\sounds\news.ogg", db+3, 1.0};
+		titles[]={};
+	};
+	class insScream {
+		name = "insurgent_scream";
+		sound[] = {"core\sounds\scream.ogg", 1, 1};
+		titles[] = {};
+	};
+};
+
+
+// Initializations event handlers for spawning intel on OPFOR death
+class Extended_Init_EventHandlers {
+     class CAManBase
+     {
+		init = " _this spawn (compileFinal preprocessFileLineNumbers 'core\main\spawn_intel.sqf')";
+     };
+};
+
+/**************************FORMATTING FOR TFAR SCREEN************************/
+
+#include "defines.hpp"
+
+class RscTitles
+{
+	class TFARTitle
+	{
+		idd = -1;
+		duration = 9999;
+		class controls
+		{
+			class TFAR_CONNECT
+			{
+				idc = -1;
+				type = 0;
+				style = ST_CENTER;
+				x = safezoneX;
+				y = safezoneY;
+				w = safezoneW;
+				h = safezoneH;
+				font = "EtelkaNarrowMediumPro";
+				sizeEx = 0.1;
+				colorBackground[] = {0,0,0,1};
+				colorText[] = {1,0.65,0,1};
+				text = "YOU MUST BE CONNECTED TO TEAMSPEAK TO PLAY";
+			};
+			class IMG_MT: RscPicture
+			{
+				idc = 1200;
+				text = "core\Images\71STOGLOADING2.jpg";
+				x = 0.341439 * safezoneW + safezoneX;
+				y = 0.0269808 * safezoneH + safezoneY;
+				w = 0.317122 * safezoneW;
+				h = 0.385016 * safezoneH;
+			};
+			class TS3_SERVER: RscText
+			{
+				idc = 1101;
+				text = "ts3.71stsog.com"; //--- ToDo: Localize;
+				x = 0.00111357 * safezoneW + safezoneX;
+				y = 0.566003 * safezoneH + safezoneY;
+				w = 0.997773 * safezoneW;
+				h = 0.0880036 * safezoneH;
+				colorBackground[] = {0,0,0,1};
+			};
+		};
+	};
+};
+/**************************FORMATTING FOR TFAR SCREEN************************/

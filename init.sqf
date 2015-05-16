@@ -1,0 +1,1 @@
+call compileFinal preprocessFileLineNumbers "core\main\init.sqf";
